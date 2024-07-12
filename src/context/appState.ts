@@ -18,7 +18,7 @@ interface AppState {
 const getTabIndex = () => {
   let index = localStorage.read("index", undefined) as string;
   if (!index) {
-    index = (localStorage.read("data", []) as Note[])[0].id;
+    index = (localStorage.read("data", []) as Note[])[0]?.id;
   }
   return index;
 };
