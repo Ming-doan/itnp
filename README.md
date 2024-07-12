@@ -1,30 +1,19 @@
-# React + TypeScript + Vite
+# Instance Notepad
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Instance Notepad. Simple, no authentication required. Quick take note and save locally.
 
-Currently, two official plugins are available:
+You can also public into internet for other user, 100% free (Update in future).
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+🚀 Deployed at Vercel. Visit [Product](https://itnp.vercel.app).
 
-## Expanding the ESLint configuration
+🍀 **Thanks for using my product.**
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+### What we offer
 
-- Configure the top-level `parserOptions` property like this:
+1. Plain Text Notepad
+2. Code Notepad
+3. Rich Text Notepad
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+### Maintainer
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+- Doan Quang Minh (Ming-doan)
