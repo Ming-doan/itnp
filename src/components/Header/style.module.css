@@ -1,0 +1,13 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.appTitle.dark {
+  color: #fff;
+}
+
+.menuContent {
+  width: 18rem;
+}

@@ -1,0 +1,76 @@
+.quill {
+  border-radius: 6px;
+}
+
+.ql-container {
+  font-family: Georgia, "Times New Roman", Times, serif;
+}
+
+.ql-toolbar.ql-snow {
+  border: none;
+  border-radius: 6px;
+  padding: 0.5rem 0;
+}
+
+.ql-container.ql-snow {
+  border: 1px solid rgba(217, 217, 217, 0.65) !important;
+  border-radius: 6px;
+  transition: 0.3s;
+}
+
+.ql-container.ql-snow:focus-within {
+  border: 1px solid rgb(22, 119, 255) !important;
+  outline: 2.5px solid rgba(22, 119, 255, 0.1) !important;
+}
+
+.ql-formats {
+  padding: 0.2rem 0.5rem;
+  border-radius: 6px;
+  margin-right: 0.5rem !important;
+}
+
+.ql-clear {
+  color: inherit !important;
+}
+
+.ql-clear:hover {
+  color: rgb(22, 119, 255);
+}
+
+.ql-snow .ql-picker {
+  color: inherit;
+}
+
+.ql-toolbar.ql-snow .ql-picker.ql-expanded .ql-picker-label {
+  border: none;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+}
+
+.ql-toolbar.ql-snow .ql-picker.ql-expanded .ql-picker-options {
+  border: none;
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  backdrop-filter: blur(0.5rem);
+  border-radius: 6px;
+  margin-top: 0.2rem !important;
+}
+
+.ql-snow .ql-tooltip {
+  background-color: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(0.5rem);
+  padding: 0.5rem 1rem;
+  color: inherit;
+  box-shadow: none;
+  border-radius: 6px;
+}
+
+.ql-snow .ql-tooltip input[type="text"] {
+  background-color: inherit;
+  color: inherit;
+  border: none;
+  border-radius: 6px;
+}
+
+.ql-snow .ql-tooltip input[type="text"]:focus {
+  border: 1px solid outset rgb(22, 119, 255);
+}
