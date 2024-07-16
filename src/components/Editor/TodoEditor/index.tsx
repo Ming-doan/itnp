@@ -11,7 +11,7 @@ type TodoEditorProps = {
 const TodoEditor: React.FC<TodoEditorProps> = ({ id, data }) => {
   // Theme value.
   // Use `useSystemTheme(theme)` to get theme string.
-  const theme = useStore((state) => state.theme);
+  // const theme = useStore((state) => state.theme);
 
   // Update changes when edit.
   // localValue is value of field, setLocalValue used for update value.
