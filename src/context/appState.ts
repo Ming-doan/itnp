@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import type { Note } from "../interfaces/NoteInterface";
+import type { Note } from "../interfaces/Interface";
 import storage from "../providers";
 
 interface AppState {

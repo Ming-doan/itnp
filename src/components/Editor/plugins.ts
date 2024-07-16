@@ -1,4 +1,4 @@
-import { NoteType } from "../../interfaces/NoteInterface";
+import { NoteType } from "../../interfaces/Interface";
 // Import Editors
 import TextEditor from "./TextEditor";
 import RichTextEditor from "./RichTextEditor";
@@ -8,7 +8,9 @@ import {
   FileTextOutlined,
   FileMarkdownOutlined,
   CodeOutlined,
+  // CheckSquareOutlined,
 } from "@ant-design/icons";
+// import TodoEditor from "./TodoEditor";
 
 // Plugins for the Editor component
 const editorOptions = [
@@ -40,6 +42,15 @@ const editorOptions = [
       language: "js",
     },
   },
+  // {
+  //   type: NoteType.Todo,
+  //   name: "Todo",
+  //   editor: TodoEditor,
+  //   icon: CheckSquareOutlined,
+  //   initData: {
+  //     todo: [],
+  //   },
+  // },
 ];
 
 export default editorOptions;

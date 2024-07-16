@@ -2,7 +2,7 @@ import styles from "./style.module.css";
 import React, { useCallback } from "react";
 import { Button, Input, Popconfirm, Space } from "antd";
 import { CloseOutlined } from "@ant-design/icons";
-import { Note } from "../../interfaces/NoteInterface.ts";
+import { Note } from "../../interfaces/Interface.ts";
 import useStore from "../../context/appState.ts";
 import useDebounceState from "../../hooks/useDebounceState.ts";
 import { mapNoteToEditorData } from "./mapper.tsx";

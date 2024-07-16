@@ -19,7 +19,7 @@ import {
 import { CSS } from "@dnd-kit/utilities";
 import useStore from "../../context/appState";
 import ConvertFromNotesToItems from "./EditorItem.tsx";
-import { NoteType } from "../../interfaces/NoteInterface.ts";
+import { NoteType } from "../../interfaces/Interface.ts";
 import storage from "../../providers";
 import { getInitializeNoteData, getNoteTypeOptions } from "./mapper.tsx";
 

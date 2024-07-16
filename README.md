@@ -10,9 +10,11 @@ You can also public into internet for other user, 100% free (Update in future).
 
 ### What we offer
 
-1. Plain Text Notepad
-2. Code Notepad
-3. Rich Text Notepad
+1. Plain Text
+2. Code
+3. Rich Text
+4. Todo list
+5. Scribble
 
 ### Maintainer
 
@@ -56,7 +58,7 @@ const MyEditor: React.FC<MyEditorProps> = ({ id, data }) => {
   // Update changes when edit.
   // localValue is value of field, setLocalValue used for update value.
   const updateData = useStore((state) => state.updateData);
-  const [localValue setLocalValue] = useDebounceState(
+  const [localValue, setLocalValue] = useDebounceState(
     data.yourFieldInInterface,
     500,
     (v) =>

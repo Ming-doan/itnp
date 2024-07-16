@@ -1,6 +1,6 @@
 import React from "react";
 import { v4 as uuidv4 } from "uuid";
-import { Note, NoteType } from "../../interfaces/NoteInterface";
+import { Note, NoteType } from "../../interfaces/Interface";
 import type { MenuProps } from "antd";
 import editorOptions from "./plugins";
 
