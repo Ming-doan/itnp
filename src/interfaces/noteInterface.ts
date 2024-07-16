@@ -1,16 +1,17 @@
+// Enum for Note Type
 enum NoteType {
   Text,
   RichText,
   Code,
-  Todo
+  Scribble,
 }
 
 interface Note {
   id: string;
   title: string;
   type: NoteType;
-  content: string;
+  data: any;
 }
 
-export {NoteType}
-export type {Note}
+export { NoteType };
+export type { Note };

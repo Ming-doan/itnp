@@ -1,10 +1,11 @@
 import "./CodeEditorTheme.css";
-import React, { memo, useState } from "react";
+import React from "react";
 import CodeMirror from "@uiw/react-codemirror";
-import { Input, Space, Select } from "antd";
-import useDebounceState from "../../hooks/useDebounceState.ts";
-import useStore from "../../context/appState";
-import useSystemTheme from "../../hooks/useSystemTheme.ts";
+import { Select, Space } from "antd";
+import useDebounceState from "../../../hooks/useDebounceState";
+import useStore from "../../../context/appState";
+import useSystemTheme from "../../../hooks/useSystemTheme";
+import CodeEditorData from "../../../interfaces/CodeEditorInterface";
 // Language Syntax
 import { cpp } from "@codemirror/lang-cpp";
 import { html } from "@codemirror/lang-html";
@@ -16,15 +17,6 @@ import { python } from "@codemirror/lang-python";
 import { rust } from "@codemirror/lang-rust";
 import { sql } from "@codemirror/lang-sql";
 import { csharp } from "@replit/codemirror-lang-csharp";
-
-const getLanguageAndContentString = (content: String) => {
-  const match = content.match(/\[\w+\]/);
-  if (match) {
-    const lang = match[0];
-    return [lang.slice(1, lang.length - 1), content.replace(lang, "")];
-  }
-  return [];
-};
 
 const getExtensionByLanguage = (language: string) => {
   switch (language) {
@@ -55,42 +47,40 @@ const getExtensionByLanguage = (language: string) => {
 
 type CodeEditorProps = {
   id: string;
-  title: string;
-  content: string;
+  data: CodeEditorData;
 };
-const CodeEditor: React.FC<CodeEditorProps> = ({ id, title, content }) => {
+const CodeEditor: React.FC<CodeEditorProps> = ({ id, data }) => {
   const theme = useStore((state) => state.theme);
-  const modifyTitle = useStore((state) => state.modifyTitle);
-  const modifyContent = useStore((state) => state.modifyContent);
-
-  const [_language, _content] = getLanguageAndContentString(content);
-
-  const [language, setLanguage] = useState(_language);
-  const [localTitle, setLocalTitle] = useDebounceState(title, 500, (v) =>
-    modifyTitle(id, v)
+  const updateData = useStore((state) => state.updateData);
+  const [localLanguage, setLocalLanguage] = useDebounceState(
+    data.language,
+    500,
+    (v) =>
+      updateData(id, {
+        language: v,
+      })
   );
-  const [localContent, setLocalContent] = useDebounceState(_content, 500, (v) =>
-    modifyContent(id, `[${language}]${v}`)
+  const [localContent, setLocalContent] = useDebounceState(
+    data.content,
+    500,
+    (v) =>
+      updateData(id, {
+        content: v,
+      })
   );
 
   return (
     <Space direction="vertical" style={{ width: "100%" }}>
-      <Input
-        placeholder="Title"
-        variant="filled"
-        value={localTitle}
-        onChange={(e) => setLocalTitle(e.target.value)}
-      />
       <CodeMirror
         value={localContent}
         onChange={(value) => setLocalContent(value)}
-        height="300px"
+        height="55vh"
         theme={useSystemTheme(theme) === "dark" ? "dark" : "light"}
-        extensions={[getExtensionByLanguage(language)]}
+        extensions={[getExtensionByLanguage(localLanguage)]}
       />
       <Select
-        value={language}
-        onChange={setLanguage}
+        value={localLanguage}
+        onChange={setLocalLanguage}
         options={[
           { label: "C++", value: "cpp" },
           { label: "HTML", value: "html" },
@@ -111,4 +101,4 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ id, title, content }) => {
   );
 };
 
-export default memo(CodeEditor);
+export default CodeEditor;

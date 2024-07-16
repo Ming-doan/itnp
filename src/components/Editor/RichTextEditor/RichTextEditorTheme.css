@@ -7,7 +7,7 @@
 }
 
 .ql-toolbar.ql-snow {
-  border: none;
+  border: none !important;
   border-radius: 6px;
   padding: 0.5rem 0;
 }

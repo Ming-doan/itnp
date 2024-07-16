@@ -1,13 +1,8 @@
 import React, { useCallback, useEffect, useMemo } from "react";
-import { v4 as uuidv4 } from "uuid";
+import { useSearchParams, URLSearchParamsInit } from "react-router-dom";
 import type { MenuProps } from "antd";
 import { Button, Dropdown, Tabs } from "antd";
-import {
-  CodeOutlined,
-  FileMarkdownOutlined,
-  FileTextOutlined,
-  PlusOutlined,
-} from "@ant-design/icons";
+import { PlusOutlined } from "@ant-design/icons";
 import type { DragEndEvent } from "@dnd-kit/core";
 import {
   closestCenter,
@@ -23,9 +18,10 @@ import {
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import useStore from "../../context/appState";
-import ConvertFromNotesToItems from "./converter";
-import { NoteType } from "../../interfaces/noteInterface";
-import localStorage from "../../providers/localStorage";
+import ConvertFromNotesToItems from "./EditorItem.tsx";
+import { NoteType } from "../../interfaces/NoteInterface.ts";
+import storage from "../../providers";
+import { getInitializeNoteData, getNoteTypeOptions } from "./mapper.tsx";
 
 interface DraggableTabPaneProps extends React.HTMLAttributes<HTMLDivElement> {
   "data-node-key": string;
@@ -53,7 +49,7 @@ const DraggableTabNode = (props: DraggableTabPaneProps) => {
 };
 
 const EditorTabs: React.FC = () => {
-  const currentNoteId = useStore((state) => state.currentNoteId);
+  const currentNoteIdInit = useStore((state) => state.currentNoteId);
   const setCurrentNoteId = useStore((state) => state.setCurrentNoteId);
   const notes = useStore((state) => state.notes);
   const setNotes = useStore((state) => state.setNotes);
@@ -61,73 +57,36 @@ const EditorTabs: React.FC = () => {
   const sensor = useSensor(PointerSensor, {
     activationConstraint: { distance: 10 },
   });
+  const [params, setSearchParams] = useSearchParams({
+    id: currentNoteIdInit,
+  } as URLSearchParamsInit);
+  const currentNoteId = params.getAll("id")[0] || currentNoteIdInit;
 
   useEffect(() => {
     // Set title when currentNoteId change
     const currentNote = notes.find((note) => note.id === currentNoteId);
     document.title =
       ((currentNote?.title as string) || "Note") + " - Instance Notepad";
-  }, [currentNoteId, notes]);
+  }, [currentNoteId]);
 
   // Update Storage when notes is changed
   useEffect(() => {
-    console.log(notes);
-    localStorage.createOrUpdate("data", notes);
+    storage.createOrUpdate("data", notes);
   }, [notes]);
 
   const onCreatePress = useCallback(
     (type: NoteType) => {
-      const _noteContent = {
-        id: uuidv4(),
-        content: "",
-      };
-      if (type === NoteType.Text) {
-        addNote({
-          ..._noteContent,
-          title: "Untitled Text",
-          type: NoteType.Text,
-        });
-      } else if (type === NoteType.RichText) {
-        addNote({
-          ..._noteContent,
-          title: "Untitled Rich Text",
-          type: NoteType.RichText,
-        });
-      } else if (type === NoteType.Code) {
-        addNote({
-          ..._noteContent,
-          title: "Untitled Code",
-          type: NoteType.Code,
-          content: "[js]",
-        });
-      }
-      setCurrentNoteId(_noteContent.id);
-      localStorage.createOrUpdate("index", _noteContent.id);
+      const note = getInitializeNoteData(type);
+      addNote(note);
+      setCurrentNoteId(note.id);
+      storage.createOrUpdate("index", note.id);
+      setSearchParams({ id: note.id });
     },
     [addNote, setCurrentNoteId]
   );
 
   const menuItems = useMemo<MenuProps["items"]>(
-    () => [
-      {
-        key: "0",
-        label: "Text",
-        icon: <FileTextOutlined />,
-        onClick: () => onCreatePress(NoteType.Text),
-      },
-      {
-        key: "1",
-        label: "Rich Text",
-        icon: <FileMarkdownOutlined />,
-        onClick: () => onCreatePress(NoteType.RichText),
-      },
-      {
-        key: "2",
-        label: "Code",
-        icon: <CodeOutlined />,
-        onClick: () => onCreatePress(NoteType.Code),
-      },
-    ],
+    () => getNoteTypeOptions(onCreatePress),
     [onCreatePress]
   );
 
@@ -147,7 +106,8 @@ const EditorTabs: React.FC = () => {
       activeKey={currentNoteId}
       onChange={(id) => {
         setCurrentNoteId(id);
-        localStorage.createOrUpdate("index", id);
+        storage.createOrUpdate("index", id);
+        setSearchParams({ id });
       }}
       defaultActiveKey={currentNoteId}
       tabBarExtraContent={
