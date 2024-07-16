@@ -3,7 +3,7 @@ enum NoteType {
   Text,
   RichText,
   Code,
-  Scribble,
+  Todo,
 }
 
 interface Note {
